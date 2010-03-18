@@ -1,19 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# TODO:
-# * Refactor parser functions into class.
-# * Move classes into separate files.
-# * More robust parser code.
-# * Possibly read restaurant and phonenumbers from command line arguments.
-# * Read parser configuration from config files.
-# * Presave data for restaurants each week.
-# * Keep list of phonenumbers and restaurants in db.
-# * Write unit tests.
-# * Setup continuous integration.
-# * Add code to github.
-# * Create subscription page.
-# * Create subscription SMS receive function.
-
 import urllib
 import xpath
 from xml.dom.minidom import parse, parseString
@@ -23,9 +9,9 @@ import html5lib
 from html5lib import treebuilders
 
 menuurl = "http://www.kvartersmenyn.se/start/rest/9598"
-phonenumber = "0706355789"
-username = "blog"
-password = "EvilE"
+phonenumber = ""
+username = ""
+password = ""
 
 def loadUrl(url, params=None, method="GET"):
     if params and method == "GET":

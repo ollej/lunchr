@@ -1,0 +1,27 @@
+lunchr
+
+Send lunch menu via SMS to subscribers.
+
+REQUIREMENTS:
+ * Python 2.6+
+ * html5lib
+ * py-dom-xpath
+ * Account with mo-sms.com
+
+INSTALLATION:
+sudo easy_install html5lib
+sudo easy_install py-dom-xpath
+
+TODO:
+ * Refactor parser functions into class.
+ * Move classes into separate files.
+ * More robust parser code.
+ * Possibly read restaurant and phonenumbers from command line arguments.
+ * Read parser configuration from config files.
+ * Presave data for restaurants each week.
+ * Keep list of phonenumbers and restaurants in db.
+ * Write unit tests.
+ * Setup continuous integration.
+ * Add code to github.
+ * Create subscription page.
+ * Create subscription SMS receive function.
