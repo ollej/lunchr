@@ -80,10 +80,10 @@ if menu:
     result = mess.send(phonenumber, menu)
 
     if result <> "0":
-        print "Kunde inte skicka meddelande: " + menu
-        print "Orsak: " + result
+        print "Couldn't send message: " + menu
+        print "The reason returned was: " + result
     else:
-        print "Meddelande skickat:" + menu
+        print "Message sent: " + menu
 else:
-    print "Hittade ingen meny för idag."
+    print "Couldn't find a lunch menu for today."
 
