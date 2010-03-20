@@ -2,8 +2,8 @@
 
 import urllib
 import xpath
-from xml.dom.minidom import parse, parseString
 import re
+from xml.dom.minidom import parse, parseString
 from datetime import date
 import html5lib
 from html5lib import treebuilders
@@ -43,6 +43,20 @@ def parseMenu(doc):
             #print "Day " + str(i) + "\n " + weekmenu
     return menu
 
+def getMenu(menuurl, weekday):
+    html = loadUrl(menuurl)
+    doc = parseHtml(html)
+    menus = parseMenu(doc)
+    menu = menus[weekday]
+    return menu
+
+def sendLunchMenu(menu):
+    mess = SMS(username, password)
+    result = mess.send(phonenumber, menu)
+
+    if result <> "0":
+        raise Exception("Couldn't send message: " + menu, "The reason returned was: " + result)
+
 class SMS:
     sendurl = "http://www.mosms.com/se/sms-send.php"
     username = ""
@@ -52,37 +66,32 @@ class SMS:
     def __init__(self, username, password, type="text"):
         self.username = username
         self.password = password
-        self.type = type
+        self.type     = type
 
     def send(self, phonenumber, message):
         params = urllib.urlencode({
             "username": self.username,
             "password": self.password,
-            "nr": phonenumber,
-            "type": self.type,
-            "data": message.encode("latin-1"),
+            "nr":       phonenumber,
+            "type":     self.type,
+            "data":     message.encode("latin-1"),
         })
         result = loadUrl(self.sendurl, params, "GET")
         return result
 
-weekday = date.today().weekday()
-if weekday >= 5:
-    quit()
+def lunchr():
+    weekday = date.today().weekday()
+    if weekday >= 5:
+        raise Exception("No lunch menu on the weekend.")
 
-html = loadUrl(menuurl)
-doc = parseHtml(html)
-menus = parseMenu(doc)
-menu = menus[weekday]
+    menu = getMenu(menuurl, weekday)
 
-if menu:
-    mess = SMS(username, password)
-    result = mess.send(phonenumber, menu)
+    if not menu:
+        raise Exception("Couldn't find a lunch menu for today.")
 
-    if result <> "0":
-        print "Couldn't send message: " + menu
-        print "The reason returned was: " + result
-    else:
-        print "Message sent: " + menu
-else:
-    print "Couldn't find a lunch menu for today."
+    sendLunchMenu(menu)
+    print "Message sent:\n" + menu
+
+# Call the main function.
+lunchr()
 
