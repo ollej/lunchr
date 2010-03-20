@@ -22,15 +22,12 @@ def loadUrl(url, params=None, method="GET"):
     f.close()
     return s
 
-def parseHtml():
-    #f = open("menu.html")
-    f = loadUrl(menuurl)
+def parseHtml(html):
     parser = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("dom"))
-    doc = parser.parse(f)
+    doc = parser.parse(html)
     return doc
 
-def getMenu():
-    doc = parseHtml()
+def parseMenu(doc):
     weekdays = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"]
     menu = []
     c = 2
@@ -72,7 +69,9 @@ weekday = date.today().weekday()
 if weekday >= 5:
     quit()
 
-menus = getMenu()
+html = loadUrl(menuurl)
+doc = parseHtml(html)
+menus = parseMenu(doc)
 menu = menus[weekday]
 
 if menu:
