@@ -27,7 +27,7 @@ def parseHtml(html):
     doc = parser.parse(html)
     return doc
 
-def parseMenu(doc):
+def extractMenu(doc):
     weekdays = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"]
     menu = []
     c = 2
@@ -46,7 +46,7 @@ def parseMenu(doc):
 def getMenu(menuurl, weekday):
     html = loadUrl(menuurl)
     doc = parseHtml(html)
-    menus = parseMenu(doc)
+    menus = extractMenu(doc)
     menu = menus[weekday]
     return menu
 
