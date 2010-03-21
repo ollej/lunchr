@@ -6,31 +6,31 @@ REQUIREMENTS:
  * Python 2.6+
  * html5lib
  * py-dom-xpath
+ * minimock (for unit tests)
  * Account with mo-sms.com
 
 INSTALLATION:
  $ sudo easy_install html5lib
  $ sudo easy_install py-dom-xpath
+ $ sudo easy_install minimock
 
 Edit lunchr.py and fill in configuration values near the top, below the import statements.
-  * phonenumber is the default cell phone number to send lunch menu to.
-  * username is your username at mo-sms.com
-  * password is your password at mo-sms.com
-  * menuurl is the URL to the page with the lunchmenu. Currently, only the
-    page already defined is the only one that works.
+ * phonenumber is the default cell phone number to send lunch menu to.
+ * username is your username at mo-sms.com
+ * password is your password at mo-sms.com
+ * menuurl is the URL to the page with the lunchmenu. Currently, only the
+   page already defined is the only one that works.
 
 USAGE:
  $ python lunchr.py
 
 TODO:
  * Refactor parser functions into class.
- * Move classes into separate files.
  * More robust parser code, possibly use YQL.
  * Possibly read restaurant and phonenumbers from command line arguments.
  * Read parser configuration from config files.
  * Presave data for restaurants each week.
  * Keep list of phonenumbers and restaurants in db.
- * Write unit tests.
  * Setup continuous integration with CI Joe.
  * Create subscription page.
  * Create subscription SMS receive function.
