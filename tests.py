@@ -58,7 +58,6 @@ class LunchrTest(unittest.TestCase):
     def test_getMenu(self):
         """
         Tests that getMenu returns the menu for given weekday 
-        TODO: Check isn't actually done yet.
         """
         MockResponse = Mock('ResponseObject')
         MockResponse.read.mock_returns = self.html
@@ -68,7 +67,6 @@ class LunchrTest(unittest.TestCase):
     def test_sendLunchMenu(self):
         """
         Tests that sendLunchMenu returns the menu for given weekday 
-        TODO: Check isn't actually done yet. Needs a mock SMS object. 
         """
         SMS = Mock('SMS')
         SMS.send.mock_returns = "0"
@@ -77,14 +75,13 @@ class LunchrTest(unittest.TestCase):
     def test_lunchr(self):
         """
         Tests that lunchr correctly calls getMenu() and sendLunchMenu()
-        TODO: Check isn't actually done yet. Needs mock functions.
+        TODO: Check isn't done yet. Needs mock functions.
         """
         self.assertEquals(None, lunchr())
 
     def test_lunchr_weekend(self):
         """
         Tests that sendLunchMenu raises an exception when run on weekends.
-        TODO: Check isn't done. Need to fake that it is weekend.
         """
         date.today.weekday = Mock('date.today.weekday', returns=6)
         self.assertRaises(Exception("No lunch menu on the weekend."), lunchr())
