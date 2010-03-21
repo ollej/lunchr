@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import urllib2
+import urllib
+import lunchr
 
 class SMS:
     sendurl = "http://www.mosms.com/se/sms-send.php"
@@ -21,6 +22,6 @@ class SMS:
             "type":     self.type,
             "data":     message.encode("latin-1"),
         })
-        result = loadUrl(self.sendurl, params, "GET")
+        result = lunchr.loadUrl(self.sendurl, params, "GET")
         return result
 
