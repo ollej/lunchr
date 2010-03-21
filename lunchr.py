@@ -18,6 +18,8 @@ def loadUrl(url, params=None, method="GET"):
         url = url + "?%s" % params
         params = None
     f = urllib.urlopen(url, params)
+    if f.getcode() <> "200":
+        raise Exceoption("There was an error retrieving the html page.")
     s = f.read()
     f.close()
     return s
