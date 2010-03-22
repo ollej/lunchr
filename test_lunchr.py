@@ -26,9 +26,14 @@ class LunchrTest(unittest.TestCase):
         ]
 
         # urllib2.urlopen mock object
-        MockResponse = minimock.Mock('ResponseObject')
-        MockResponse.read.mock_returns = self.html
-        urllib2.urlopen = minimock.Mock('urllib2.urlopen', returns=MockResponse)
+        MockResponseHtml = minimock.Mock('ResponseObject')
+        MockResponseHtml.read.mock_returns = self.html
+        self.urlopen_mock = minimock.Mock('urllib2.urlopen', returns=MockResponseHtml)
+
+        # SMS mock object
+        SMSMock = minimock.Mock('SMSMock')
+        SMSMock.send.mock_returns = '0'
+        self.SMS = minimock.Mock('lunchr.SMS', returns=SMSMock)
 
         # Mock object for date 
         lunchr.date = minimock.Mock('lunchr.date')
@@ -41,6 +46,7 @@ class LunchrTest(unittest.TestCase):
         Tests that loadUrl can download a web page
         IOError('socket error', (-2, 'Name or service not known'))
         """
+        urllib2.urlopen = self.urlopen_mock
         self.assertEquals(self.html, lunchr.loadUrl('http://www.example.com'))
 
     def test_parseHtml(self):
@@ -62,16 +68,14 @@ class LunchrTest(unittest.TestCase):
         """
         Tests that getMenu returns the menu for given weekday 
         """
+        urllib2.urlopen = self.urlopen_mock
         self.assertEquals(u'\xc4RTSOPPA & PANNKAKOR m. sylt & gr\xe4dde# SEJ m. \xe4gg- & persiljes\xe5s samt kokt potatis* \xa4 KYCKLINGFAJITASm. paprika, salsa & tortillas* VEG: QUORNFAJITASm. paprika, salsa & tortillas', lunchr.getMenu('http://www.example.com', 3))
 
     def test_sendLunchMenu(self):
         """
         Tests that sendLunchMenu returns the menu for given weekday 
         """
-
-        SMS = minimock.Mock('SMS')
-        SMS.send.mock_returns = '0'
-
+        lunchr.SMS = self.SMS
         self.assertEquals(None, lunchr.sendLunchMenu("Dummy menu"))
 
     def test_lunchr(self):
@@ -80,7 +84,9 @@ class LunchrTest(unittest.TestCase):
         TODO: Check isn't done yet. Needs mock functions.
         """
 
+        urllib2.urlopen = self.urlopen_mock
         lunchr.date.today.mock_returns = date(2010, 3, 18)
+        lunchr.SMS = self.SMS
 
         self.assertEquals(None, lunchr.lunchr())
 
